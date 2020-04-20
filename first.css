@@ -1,6 +1,7 @@
 #formulario {
-    background: #c59733;
-    border-radius: 3px;
+    background: #8dcab8;
+    border-radius: 5px;
+    border: 1px solid #000000;
     padding: 10px;
     width: 90%;
     margin: 20px auto;
@@ -8,8 +9,8 @@
 }
 
 #form {
-    background: #c59733;
-    border-radius: 3px;
+    background: #8dcab8;
+    border-radius: 5px;
     padding: 10px;
     width: 90%;
     margin: 20px auto;
