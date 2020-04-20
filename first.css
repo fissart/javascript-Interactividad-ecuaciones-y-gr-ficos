@@ -1,0 +1,73 @@
+#formulario {
+    background: #c59733;
+    border-radius: 3px;
+    padding: 10px;
+    width: 90%;
+    margin: 20px auto;
+    margin-bottom: 0.1cm;
+}
+
+#form {
+    background: #c59733;
+    border-radius: 3px;
+    padding: 10px;
+    width: 90%;
+    margin: 20px auto;
+    margin-bottom: 0.1cm;
+}
+
+button {
+    padding: 3px;
+}
+
+label {
+    padding: 3px;
+}
+
+#y,
+#x {
+    padding: 3px;
+}
+
+
+#.www {
+    background: #333dc5;
+    border: 5px solid #c59733;
+}
+
+
+//new
+
+
+
+body,
+html,
+table td,
+table th,
+input[type="text"] {
+    font-size: 11pt;
+    font-family: verdana, arial, sans-serif;
+}
+
+h1 {
+    font-size: 11pt;
+}
+
+input[type="text"] {
+    padding: 5px;
+    width: 800px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table td,
+table th {
+    padding: 5px;
+    border: 1px solid lightgray;
+}
+
+table th {
+    background-color: lightgray;
+}

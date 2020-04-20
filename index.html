@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!--mathjax-->
+    <script>
+      (function () {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        var src = "true";
+        if (src === "" || src === "true")
+          src =
+            "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+        if (location.protocol !== "file:")
+          if (/^https?:/.test(src)) src = src.replace(/^https?:/, "");
+        script.src = src;
+        document.getElementsByTagName("head")[0].appendChild(script);
+      })();
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: {equationNumbers: { autoNumber:"AMS"}},
+        "HTML-CSS": { availableFonts: ["Tex"] }
+      });
+    </script>
+    <script text="text/javascript" src="new.js"></script>
+    <link rel="stylesheet" href="first.css" />
+    <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+    <script src="https://unpkg.com/mathjs@6.6.4/dist/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+  </head>
+
+  <body>
+    <form id="formulario">
+      <script>
+        function integral() {
+          var inte = math.derivative(
+            document.getElementById("inttw").value,
+            "x"
+          );
+          document.getElementById("rrr").innerHTML = inte;
+        }
+        var rr = math.derivative("x^2 + log(x)*cos(x)", "x");
+      </script>
+      <label for="">Escriba la ecuación</label>
+      <input type="text" value="x^2 + log(x)*cos(x)+e^(x^2)" id="inttw" />
+      <button type="button" onclick="integral()">Derivada</button>
+      <br /><br />
+      La derivada de la ecuacion es: <span id="rrr"></span>
+    </form>
+
+    <form id="formulario">
+      <script>
+        function limpiar() {
+          document.getElementById("formulario");
+        }
+
+        function s1() {
+          var x = parseInt(document.getElementById("x").value);
+          var y = parseInt(document.getElementById("y").value);
+          document.getElementById("resulta").innerHTML = x + y;
+        }
+
+        function s2() {
+          var x = parseInt(document.getElementById("x").value);
+          var y = parseInt(document.getElementById("y").value);
+          document.getElementById("resulta").innerHTML = x * y;
+        }
+
+        function s3() {
+          var x = parseInt(document.getElementById("x").value);
+          var y = parseInt(document.getElementById("y").value);
+          document.getElementById("resulta").innerHTML = x / y;
+        }
+
+        function s4() {
+          var x = parseInt(document.getElementById("x").value);
+          var y = parseInt(document.getElementById("y").value);
+          document.getElementById("resulta").innerHTML = Math.pow(x, 1 / y);
+        }
+
+        function s5() {
+          var x = parseInt(document.getElementById("x").value);
+          var y = parseInt(document.getElementById("y").value);
+          document.getElementById("resulta").innerHTML =
+            Math.log(x) / Math.log(y);
+        }
+      </script>
+      <label for="">\(x\)</label>
+      <input type="number" id="x" placeholder="Escriba un número" />
+      <button onclick="limpiar();">Limpiar todo</button>
+      <br /><br />
+      <label for="">\(y\)</label>
+      <input type="number" id="y" placeholder="Escriba el siguiente número" />
+      <br /><br />
+      <button type="button" onclick="s1()">\(x+y\)</button>
+      <button type="button" onclick="s2()">\(x\cdot y\)</button>
+      <button type="button" onclick="s3()">\(x/y\)</button>
+      <button type="button" onclick="s4()">\(\sqrt[y]{x}\)</button>
+      <button type="button" onclick="s5()">\(\ln_yx\)</button>
+      <br /><br />
+      El resultado de ... es <span id="resulta"></span> entonces
+    </form>
+
+    <!--Expression evaluation with math.js, pretty printing with MathJax
+-->
+
+    <form id="formulario">
+      <table>
+        <tr>
+          <th>Expresión</th>
+          <td><input type="text" id="expr" /></td>
+        </tr>
+        <tr>
+          <th>Impresión latex</th>
+          <td>
+            <div id="pretty">\(\)</div>
+          </td>
+        </tr>
+        <tr>
+          <th>Resultado</th>
+          <td>
+            <div id="result"></div>
+          </td>
+        </tr>
+      </table>
+
+      <script>
+        const expr = document.getElementById("expr");
+        const pretty = document.getElementById("pretty");
+        const result = document.getElementById("result");
+        let parenthesis = "keep";
+        let implicit = "hide";
+
+        // initialize with an example expression
+        expr.value =
+          "pi-sqrt(75 / 3) + det([[-1, 2], [3, 1]]) - sin(pi / 4)^2-(cos(5)- 5/9)*8";
+        pretty.innerHTML =
+          "$$" +
+          math.parse(expr.value).toTex({ parenthesis: parenthesis }) +
+          "$$";
+        result.innerHTML = math.format(math.evaluate(expr.value));
+
+        expr.oninput = function () {
+          let node = null;
+
+          try {
+            // parse the expression
+            node = math.parse(expr.value);
+
+            // evaluate the result of the expression
+            result.innerHTML = math.format(node.compile().evaluate());
+          } catch (err) {
+            result.innerHTML =
+              '<span style="color: red;">' + err.toString() + "</span>";
+          }
+
+          try {
+            // export the expression to LaTeX
+            const latex = node
+              ? node.toTex({ parenthesis: parenthesis, implicit: implicit })
+              : "";
+            console.log("LaTeX expression:", latex);
+
+            // display and re-render the expression
+            const elem = MathJax.Hub.getAllJax("pretty")[0];
+            MathJax.Hub.Queue(["Text", elem, latex]);
+          } catch (err) {}
+        };
+      </script>
+    </form>
+
+    <form id="form">
+      <label for="eq">Enter an equation: </label>
+      <input type="text" id="eq" value="4 * sin(x) + 5 * cos(x/2)" />
+      <input type="submit" value="Dibujar" />
+
+      <div id="plot"></div>
+
+      <p>Used plot library: <a href="https://plot.ly/javascript/">Plotly</a></p>
+      <!---->
+      <script>
+        function draw() {
+          try {
+            // compile the expression once
+            const expression = document.getElementById("eq").value;
+            const expr = math.compile(expression);
+
+            // evaluate the expression repeatedly for different values of x
+            const xValues = math.range(-5, 5, 0.01).toArray();
+            const yValues = xValues.map(function (x) {
+              return expr.evaluate({ x: x });
+            });
+
+            // render the plot using plotly
+            const trace1 = {
+              x: xValues,
+              y: yValues,
+              type: "scatter",
+            };
+            const data = [trace1];
+            Plotly.newPlot("plot", data);
+          } catch (err) {
+            console.error(err);
+            alert(err);
+          }
+        }
+
+        document.getElementById("form").onsubmit = function (event) {
+          event.preventDefault();
+          draw();
+        };
+
+        draw();
+      </script>
+    </form>
+  </body>
+</html>
