@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="shortcut icon" type="image/x-icon" href="icono.ico" />
 
 
 
@@ -29,7 +30,7 @@
       </script>
       <label for="">Escriba la ecuación</label>
       <input type="text" value="x^2 + log(x)*cos(x)+e^(x^2)" id="inttw" />
-      <button type="button" onclick="integral()">Derivada</button>
+      <button type="button" onclick="integral()">Derivar</button>
       <br /><br />
       La derivada de la ecuacion es: <span id="rrr"></span>
     </form>
@@ -172,7 +173,7 @@
             const expr = math.compile(expression);
 
             // evaluate the expression repeatedly for different values of x
-            const xValues = math.range(-5, 5, 0.01).toArray();
+            const xValues = math.range(-10, 10, 0.01).toArray();
             const yValues = xValues.map(function (x) {
               return expr.evaluate({ x: x });
             });
